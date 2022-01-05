@@ -6,4 +6,7 @@ module.exports = function(app){
 
   app.route('/notes')
     .get(controller.get_notes);
+
+  app.route('/newNote')
+    .post(controller.new_note);
 };
