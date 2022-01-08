@@ -1,19 +1,15 @@
+//Server variables
 var express = require('express'),
 app = express(),
-port = process.env.PORT || 3000,
-Note = require('./api/models/noteModel.js'),
-bodyParser = require('body-parser');
+port = process.env.PORT || 3000;
 
+//Models
+const Note = require('./api/models/noteModel.js');
+
+//Database connection
 const database = require('./database.js');
 
-// var MongoClient = require('mongodb').MongoClient;
-// var url = "mongodb://127.0.0.1:27017/quick-note";
-//
-// MongoClient.connect(url, function(err, db){
-//   if (err) throw err;
-//   console.log("Connected to Database!");
-// });
-
+const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 

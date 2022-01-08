@@ -5,10 +5,17 @@ Note = mongoose.model('Notes');
 
 const db = require('../../database.js');
 
+/*
+Get request to recieve all of the notes
+*/
 exports.get_notes = function(req, res){
   res.send("Getting Notes....");
 };
 
+/*
+POST request to create a new note.
+Request passes in the values for the note
+*/
 exports.new_note = function(req, res){
   var newNote = new Note(req.body);
   console.log("Here");
@@ -21,11 +28,4 @@ exports.new_note = function(req, res){
 
   res.send("Got it");
 
-  // newNote.save(function(err, note){
-  //   if(err){
-  //     console.log(err);
-  //     res.send(err);
-  //   }
-  //   res.json(note);
-  // })
 };
