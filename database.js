@@ -1,12 +1,29 @@
-var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://127.0.0.1:27017/quick-note";
-var database_connection;
+const { MongoClient } = require('mongodb');
 
-//Connect to database
-MongoClient.connect(url, function(err, db){
-  if (err) throw err;
-  databaseConnection = db;
-  console.log("Connected to Database!");
-});
+class MongoDatabase{
+  constructor(){
+    const url = "mongodb://127.0.0.1:27017/quick-note";
+    this.client = new MongoClient(url);
+  }
 
-module.exports.database_connection = database_connection;
+  async init(){
+    await this.client.connect();
+    console.log("Connected");
+
+    this.db = this.client.db;
+    //var collection = this.db.collection("notes");
+    var test = {
+      name: "John",
+      age: 25
+    }
+
+  //  const result = await this.client.db.collection("test-collection").insertOne(test);
+
+    this.db.createCollection("test-collection", function(err, res){
+      
+    })
+
+  }
+}
+
+module.exports = new MongoDatabase();

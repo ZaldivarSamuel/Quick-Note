@@ -7,14 +7,46 @@ port = process.env.PORT || 3000;
 const Note = require('./api/models/noteModel.js');
 
 //Database connection
-const database = require('./database.js');
+const mongo = require('./database.js');
 
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+async function start(){
 
-var routes = require('./api/routes/routes.js');
-routes(app);
+  const bodyParser = require('body-parser');
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.json());
 
-app.listen(port);
-console.log("API started on port: " + port);
+  var routes = require('./api/routes/routes.js');
+  routes(app);
+
+  //await mongo.init();
+
+  const mongodb = require('mongodb');
+  const MongoClient = mongodb.MongoClient;
+
+  const url = "mongodb://127.0.0.1:27017";
+  MongoClient.connect(url, (err, client) =>{
+    if(err){
+      console.log(err);
+
+    }
+
+    console.log("Database connection successful");
+    const db = client.db("quick-note");
+
+    var test = {
+      name: "John",
+      age: 25
+    }
+
+
+    const collection = db.collection("test");
+
+    collection.insertOne(test);
+  });
+
+
+  app.listen(port);
+  console.log("API started on port: " + port);
+}
+
+start();
