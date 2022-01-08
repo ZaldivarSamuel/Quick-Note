@@ -18,32 +18,7 @@ async function start(){
   var routes = require('./api/routes/routes.js');
   routes(app);
 
-  //await mongo.init();
-
-  const mongodb = require('mongodb');
-  const MongoClient = mongodb.MongoClient;
-
-  const url = "mongodb://127.0.0.1:27017";
-  MongoClient.connect(url, (err, client) =>{
-    if(err){
-      console.log(err);
-
-    }
-
-    console.log("Database connection successful");
-    const db = client.db("quick-note");
-
-    var test = {
-      name: "John",
-      age: 25
-    }
-
-
-    const collection = db.collection("test");
-
-    collection.insertOne(test);
-  });
-
+  await mongo.init();
 
   app.listen(port);
   console.log("API started on port: " + port);
